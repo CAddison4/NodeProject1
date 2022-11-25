@@ -3,6 +3,12 @@
 <a href="/profiles/edit"><button>Create New Profile</button></a>
 </div>
 <div>
+  <!-- method="POST" -->
+  <form class="search" action="/profiles">
+    <input type="text" placeholder="Search" name="search">
+    <button type="submit"><i class="search">Search</i></button>
+  </form>
+
 <ul>
   <% for (let i = 0; i < profiles.length; i++ ) {%>
   <li>

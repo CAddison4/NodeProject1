@@ -1,25 +1,29 @@
 const Profile = require("../models/Profile.js");
 
 const ProfileOps = require("../data/ProfileOps");
-// instantiate the class so we can use its methods
+
 const _profileOps = new ProfileOps();
+
+
 
 //Index - List of All Profiles
 exports.Index = async function (request, response) {
-    console.log("loading profiles from controller");
-    let profiles = await _profileOps.getAllProfiles();
-    if (profiles) {
-      response.render("profiles", {
-        title: "Express Yourself - Profiles",
-        profiles: profiles,
+  let profiles = []
+  console.log(request.query.search)
+  if(!request.query.search){
+    profiles = await _profileOps.getAllProfiles();
+    console.log("all profiles")
+  } else{
+    profiles = await _profileOps.getFilteredProfiles(request.query.search);
+    console.log(request.query.search)
+  }
 
+  response.render("profiles", {
+    title: "Express Yourself - Profiles",
+    profiles: profiles,
+    search: request.query.search,
       });
-    } else {
-      response.render("profiles", {
-        title: "Express Yourself - Profiles",
-        profiles: [],
-      });
-    }
+    
   };
 
   //Details - Single Profiles
@@ -28,6 +32,7 @@ exports.Index = async function (request, response) {
     console.log(`loading single profile by id ${profileId}`);
     let profile = await _profileOps.getProfileById(profileId);
     let profiles = await _profileOps.getAllProfiles();
+    
     if (profile) {
       response.render("profile", {
         title: "Express Yourself - " + profile.name,

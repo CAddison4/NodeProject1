@@ -1,27 +1,24 @@
 const Profile = require("../models/Profile.js");
 
 class ProfileOps {
-  // empty constructor
+
   ProfileOps() {}
 
-  // DB methods
   //Get All Profiles
   async getAllProfiles() {
-    console.log("getting all profiles");
     let profiles = await Profile.find().sort({ name: 1 });
     return profiles;
   }
 
 //Get All Profiles Matching Filter
     async getFilteredProfiles(string) {
-        console.log("getting filtered profiles");
-        let profiles = await Profile.find({name:{string}}).sort({ name: 1 });
+      const filter = { name: { $regex: string, $options: "i" } }
+        let profiles = await Profile.find(filter).sort({ name: 1 });
         return profiles;
       }
 
   //Get Profiles By ID
   async getProfileById(id) {
-    console.log(`getting profile by id ${id}`);
     let profile = await Profile.findById(id);
     return profile;
   }
@@ -35,11 +32,9 @@ class ProfileOps {
           obj: profileObj,
           errorMsg: error.message,
         };
-        console.log("success creating profile")
-        return response; // Exit if the model is invalid
+        return response;
       }
 
-      // Model is valid, so save it
       const result = await profileObj.save();
       const response = {
         obj: result,

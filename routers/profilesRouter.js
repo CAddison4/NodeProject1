@@ -6,7 +6,7 @@ const path = require("path");
 const express = require("express");
 const profilesRouter = express.Router();
 
-const profilePath = path.join(__dirname + "../data/");
+const profilesPath = path.join(__dirname + "../data/");
 
 //Show Listing of All Profiles
 profilesRouter.get("/", ProfileController.Index);
