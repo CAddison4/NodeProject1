@@ -12,10 +12,7 @@
     "url": "git+https://github.com/CAddison4/NodeProjectDay2.git"
   },
   "author": "Catherine Addison",
-  "contributors": [
-    "Adam Rodrigues",
-    "Mike Yamauchi"
-  ],
+
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/CAddison4/NodeProjectDay2/issues"
