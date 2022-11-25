@@ -26,10 +26,12 @@
       </div>
       <div class="sidebar">
           <h2>Other Profiles</h2>
+          <!-- <main><%- body %></main> -->
           <ul>
-              <% for (let i = 0; i < otherProfiles.length; i++) { %>
-                  <li><a href="/profiles/<%= otherProfiles[i].id %>"><%= otherProfiles[i].name%></a></li>
-              <% } %>
+            <% for (let i = 0; i < profiles.length; i++) { %> <%if(profiles[i].id !=
+            profileId) {%>
+            <li><a href="<%= profiles[i].id%>"><%= profiles[i].name%></a></li>
+            <% } %> <% } %>
           </ul>
       </div>
     </main>

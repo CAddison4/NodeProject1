@@ -1,35 +1,52 @@
 "use strict";
+
+const { mongoose } = require("mongoose");
+const uri =
+  "mongodb+srv://demo-user:z4GiMpm81E6YvVqa@ssd-0.cfyhveg.mongodb.net/nodeassignment3?retryWrites=true&w=majority";
+
+// set up default mongoose connection
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// store a reference to the default connection
+const db = mongoose.connection;
+
+// Bind connection to error event (to get notification of connection errors)
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
 //Requirements
 const express = require("express");
-const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
-const cors = require("cors");
-const bodyParser = require("body-parser");
 const logger = require("morgan");
-
-//Create App Server & Port
-const app = express();
-const port = process.envPORT || 3000;
-
-// Allow cross origin requests from any port on local machine
-app.use(cors({ origin: [/127.0.0.1*/, /localhost*/] }));
+const path = require("path");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // Load Routers
 const indexRouter = require("./routers/indexRouter");
-const apiRouter = require("./routers/apiRouter");
 const profilesRouter = require("./routers/profilesRouter");
+const apiRouter = require("./routers/apiRouter");
 
-//Allow Access to Views
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+//Create App Server & Port
+const port = process.env.PORT || 3000;
+const app = express();
+
+
+// Allow cross origin requests from any port on local machine
+app.use(cors({ origin: [/127.0.0.1*/, /localhost*/] }));
 
 //Use Logger, Layouts, & Body Parser
 app.use(logger("dev"));
 app.use(express.static("public"));
 app.use(expressLayouts);
 app.set("layout", "./layouts/full-width");
+
+//Allow Access to Views
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
 
 //Set Router Paths
 app.use(indexRouter);

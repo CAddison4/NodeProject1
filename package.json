@@ -13,12 +13,8 @@
   },
   "author": "Catherine Addison",
   "contributors": [
-    {
-      "name": "Adam Rodrigues"
-    },
-    {
-      "name": "Mike Yamauchi"
-    }
+    "Adam Rodrigues",
+    "Mike Yamauchi"
   ],
   "license": "ISC",
   "bugs": {
@@ -33,6 +29,9 @@
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
+    "mongodb": "^4.12.1",
+    "mongoose": "^6.7.3",
     "morgan": "^1.10.0"
-  }
+  },
+  "keywords": []
 }

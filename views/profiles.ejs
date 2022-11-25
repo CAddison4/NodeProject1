@@ -1,6 +1,14 @@
 <h1>Profiles</h1>
+<div>
+<a href="/profiles/edit"><button>Create New Profile</button></a>
+</div>
+<div>
 <ul>
-    <% for (let i = 0; i < profiles.length; i++) { %>
-    <li><a href="/profiles/<%= profiles[i].id %>"><%= profiles[i].name %></a></li>
-    <% } %>
+  <% for (let i = 0; i < profiles.length; i++ ) {%>
+  <li>
+    <a href="/profiles/<%= profiles[i].id %>"><%= profiles[i].name %></a> | 
+    <a href="/profiles/<%= profiles[i].id %>/delete"><button>Delete</button></a>
+  </li>
+  <% } %>
 </ul>
+</div>

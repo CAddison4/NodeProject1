@@ -1,51 +1,32 @@
 "use strict";
-
+const ProfileController = require("../controllers/ProfileController");
 const fs = require("fs").promises;
 const path = require("path");
 
 const express = require("express");
 const profilesRouter = express.Router();
 
-const profilesPath = path.join(__dirname + "/../data/profiles.json");
+const profilePath = path.join(__dirname + "../data/");
 
-profilesRouter.get("/", (req, res) => { 
-    fs.readFile(profilesPath) 
-        .then(contents => {
-            const profiles = JSON.parse(contents);
-            const viewData = {
-                title: "Profiles",
-                profiles: profiles
-            };
-            res.render("profiles", viewData);
-        })
-        .catch(err => {
-            console.log(err);
-            res.writeHead(500);
-            res.end("Error");
-        })
-});
+//Show Listing of All Profiles
+profilesRouter.get("/", ProfileController.Index);
 
-profilesRouter.get("/:id", (req, res) => {
-    fs.readFile(profilesPath)
-        .then(contents => {
-            const profiles = JSON.parse(contents);
-            const profile = profiles.find( 
-                p => p.id === req.params.id);
-            const otherProfiles = profiles.filter(
-                p => p !== profile);
-            const viewData = {
-                title: profile.name,
-                profile: profile,
-                otherProfiles: otherProfiles,
-                layout: "./layouts/side-bar"
-            };
-            res.render("profile", viewData);
-        })
-        .catch(err => {
-            console.log(err);
-            res.writeHead(500);
-            res.end("Error");
-        })
-});
+// Show Create Profile Form
+profilesRouter.get("/edit", ProfileController.Create);
+
+// Handle Create Profile Form Submission
+profilesRouter.post("/edit", ProfileController.CreateProfile);
+
+// Show Edit Profile Form
+profilesRouter.get("/edit/:id", ProfileController.Edit);
+
+// Handle Edit Profile Form Submission
+profilesRouter.post("/edit/:id", ProfileController.EditProfile);
+
+// Show Individual Profile Details
+profilesRouter.get("/:id", ProfileController.Detail);
+
+// Delete an Individual Profile
+profilesRouter.get("/:id/delete", ProfileController.DeleteProfileById);
 
 module.exports = profilesRouter;
