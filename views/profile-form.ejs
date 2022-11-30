@@ -1,10 +1,14 @@
 <h3><%= profile_id ? "Edit" : "New" %> Profile</h3>
 
-<form action="/profiles/edit<%= profile_id ? "/"+profile_id : "" %>" method="POST">   
+<form action="/profiles/edit<%= profile_id ? "/"+profile_id : "" %>" method="POST" enctype = "multipart/form-data">   
     <input type="hidden" id="profile_id" name="profile_id" value="<%= profile_id %>">
     <label for="name">Name:</label>
 <input id="name" name="name" type="text" 
                  value="<%= profile.name ? profile.name : '' %>" >
+<label for="name">Interests(comma-separated):</label>
+<input id="interests" name="interests" type="text" value="<%= profile.interests ? profile.interests: '' %>">
+<label for="name">Photo:</label>
+<input id="photo" name="photo" type="file" value="<%= profile.imagePath ? profile.imagePath: '' %>">
                  <button type="submit" value="Submit">Submit</button>
 </form>
 <%= errorMessage %>

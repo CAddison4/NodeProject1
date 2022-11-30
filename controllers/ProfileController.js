@@ -3,7 +3,9 @@ const Profile = require("../models/Profile.js");
 const ProfileOps = require("../data/ProfileOps");
 
 const _profileOps = new ProfileOps();
-
+const path = require("path");
+const e = require("express");
+const dataPath = path.join(__dirname, '../public/')
 
 
 //Index - List of All Profiles
@@ -60,11 +62,25 @@ exports.Create = async function (request, response) {
 
   // Handle profile form GET request
 exports.CreateProfile = async function (request, response) {
-    // instantiate a new Profile Object populated with form data
+    // instantiate a new Profile Object populated with form datas.
+    let path = ""
+    // console.log(request.files.photo)
+    if(request.files != null){
+      path = dataPath+"images/"+request.files.photo.name;
+      request.files.photo.mv(path);
+      path = "/images/"+request.files.photo.name;
+    }
+    else{
+      path = "";
+    }
+    let interests = (request.body.interests).split(",")
+
     let tempProfileObj = new Profile({
       name: request.body.name,
+      interests: interests,
+      imagePath: path
     });
-  
+    console.log("Boo"+tempProfileObj)
     //
     let responseObj = await _profileOps.createProfile(tempProfileObj);
   
@@ -76,6 +92,7 @@ exports.CreateProfile = async function (request, response) {
         title: "Express Yourself - " + responseObj.obj.name,
         profiles: profiles,
         profileId: responseObj.obj._id.valueOf(),
+        imagePath: responseObj.imagePath,
         layout: "./layouts/side-bar",
       });
     }
@@ -83,7 +100,7 @@ exports.CreateProfile = async function (request, response) {
     // There are errors. Show form the again with an error message.
     else {
       console.log("An error occured. Item not created.");
-      response.render("profile-create", {
+      response.render("profile-form", {
         title: "Create Profile",
         profile: responseObj.obj,
         errorMessage: responseObj.errorMsg,
@@ -128,9 +145,21 @@ exports.Edit = async function (request, response) {
 exports.EditProfile = async function (request, response) {
     const profileId = request.body.profile_id;
     const profileName = request.body.name;
+    const profileInterests = request.body.interests.split(",")
+    let path = ""
+    // console.log(request.files.photo)
+    if(request.files != null){
+      path = dataPath+"images/"+request.files.photo.name;
+      request.files.photo.mv(path);
+      path = "/images/"+request.files.photo.name;
+    }
+    else{
+      path = "";
+    }
+    const imagePath = path;
   
     // send these to profileOps to update and save the document
-    let responseObj = await _profileOps.updateProfileById(profileId, profileName);
+    let responseObj = await _profileOps.updateProfileById(profileId, profileName, profileInterests, imagePath);
   
     // if no errors, save was successful
     if (responseObj.errorMsg == "") {

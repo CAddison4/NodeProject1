@@ -16,6 +16,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 //Requirements
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const expressFileUpload = require("express-fileupload")
 const logger = require("morgan");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -38,6 +39,7 @@ app.use(cors({ origin: [/127.0.0.1*/, /localhost*/] }));
 app.use(logger("dev"));
 app.use(express.static("public"));
 app.use(expressLayouts);
+app.use(expressFileUpload())
 app.set("layout", "./layouts/full-width");
 
 //Allow Access to Views

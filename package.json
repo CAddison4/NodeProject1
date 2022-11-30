@@ -12,7 +12,6 @@
     "url": "git+https://github.com/CAddison4/NodeProjectDay2.git"
   },
   "author": "Catherine Addison",
-
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/CAddison4/NodeProjectDay2/issues"
@@ -26,6 +25,7 @@
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
+    "express-fileupload": "^1.4.0",
     "mongodb": "^4.12.1",
     "mongoose": "^6.7.3",
     "morgan": "^1.10.0"

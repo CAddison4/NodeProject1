@@ -8,7 +8,7 @@ const profilesRouter = express.Router();
 
 const profilesPath = path.join(__dirname + "../data/");
 
-//Show Listing of All Profiles
+// All Profiles
 profilesRouter.get("/", ProfileController.Index);
 
 // Show Create Profile Form

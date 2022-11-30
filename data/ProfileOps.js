@@ -1,3 +1,4 @@
+const { ProfilingLevel } = require("mongodb");
 const Profile = require("../models/Profile.js");
 
 class ProfileOps {
@@ -24,18 +25,18 @@ class ProfileOps {
   }
 
     
-  async createProfile(profileObj) {
+  async createProfile(profileObject) {
     try {
-      const error = await profileObj.validateSync();
+      const error = await profileObject.validateSync();
       if (error) {
         const response = {
-          obj: profileObj,
+          obj: profileObject,
           errorMsg: error.message,
         };
         return response;
       }
 
-      const result = await profileObj.save();
+      const result = await profileObject.save();
       const response = {
         obj: result,
         errorMsg: "",
@@ -43,7 +44,7 @@ class ProfileOps {
       return response;
     } catch (error) {
       const response = {
-        obj: profileObj,
+        obj: profileObject,
         errorMsg: error.message,
       };
       return response;
@@ -57,11 +58,14 @@ class ProfileOps {
     return result;
   }
 
-  async updateProfileById(id, profileName) {
+  async updateProfileById(id, profileName, profileInterests, imagePath) {
     console.log(`updating profile by id ${id}`);
     const profile = await Profile.findById(id);
     console.log("original profile: ", profile);
     profile.name = profileName;
+    profile.interests = profileInterests;
+    profile.imagePath = imagePath;
+    
 
     let result = await profile.save();
     console.log("updated profile: ", result);

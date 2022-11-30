@@ -4,6 +4,7 @@
     <% if(profiles[i].imagePath) { %>
       <img src="<%= profiles[i].imagePath %>" alt="<%= profiles[i].name %>" />
     <% } %>
+    
     <ul>
       <% for (let j = 0; j < profiles[i].interests.length; j++) { %>
         <li><%= profiles[i].interests[j] %></li>
